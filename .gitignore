@@ -15,7 +15,5 @@
 .DS_Store
 .prettierignore
 
-design
-images
-
 README-template.md
+content.txt
