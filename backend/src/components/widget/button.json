@@ -1,13 +1,13 @@
 {
   "collectionName": "components_widget_buttons",
   "info": {
-    "displayName": "button",
+    "displayName": "Link",
     "icon": "mouse-pointer",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "text": {
+    "label": {
       "type": "string",
       "required": true
     },
@@ -18,7 +18,7 @@
         "outline",
         "text"
       ],
-      "default": "solid"
+      "default": "text"
     },
     "icon": {
       "type": "media",
@@ -28,8 +28,12 @@
         "images"
       ]
     },
-    "to": {
+    "url": {
       "type": "string"
+    },
+    "relatedTo": {
+      "type": "integer",
+      "min": 0
     }
   }
 }

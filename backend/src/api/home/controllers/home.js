@@ -16,6 +16,8 @@ module.exports = createCoreController("api::home.home", ({ strapi }) => ({
         menu: {
           populate: {
             logo: true,
+            menuIcon: true,
+            closeMenuIcon: true,
             links: {
               populate: {
                 icon: true,
