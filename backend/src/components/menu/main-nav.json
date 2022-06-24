@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_menu_main_navs",
+  "info": {
+    "displayName": "main-nav",
+    "icon": "directions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "link": {
+      "type": "component",
+      "repeatable": true,
+      "component": "widget.button"
+    }
+  }
+}

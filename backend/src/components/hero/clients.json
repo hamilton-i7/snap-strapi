@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_hero_clients",
+  "info": {
+    "displayName": "clients",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "client": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

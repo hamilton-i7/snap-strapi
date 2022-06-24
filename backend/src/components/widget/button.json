@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_widget_buttons",
+  "info": {
+    "displayName": "button",
+    "icon": "mouse-pointer",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "solid",
+        "outline",
+        "text"
+      ],
+      "default": "solid"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "to": {
+      "type": "string"
+    }
+  }
+}
