@@ -34,6 +34,10 @@
     "relatedTo": {
       "type": "integer",
       "min": 0
+    },
+    "isUserFlow": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

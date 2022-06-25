@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from './pages/Home'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider
+      theme={{
+        fonts: {
+          body: {
+            fontFamily: 'Epilogue, sans-serif',
+          },
+        },
+        colors: {
+          almostWhite: 'hsl(0, 0%, 98%)',
+          mediumGray: 'hsl(0, 0%, 41%)',
+          almostBlack: 'hsl(0, 0%, 8%)',
+        },
+      }}>
+      <GlobalStyle />
+      <Home />
+    </ThemeProvider>
+  )
 }
 
-export default App;
+const Theme = ({ children }) => (
+  <ThemeProvider
+    theme={{
+      fonts: {
+        body: {
+          fontFamily: 'Epilogue, sans-serif',
+        },
+      },
+      colors: {
+        almostWhite: 'hsl(0, 0%, 98%)',
+        mediumGray: 'hsl(0, 0%, 41%)',
+        almostBlack: 'hsl(0, 0%, 8%)',
+      },
+    }}>
+    {children}
+  </ThemeProvider>
+)
+
+export default App
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0;
+    padding: 0;
+    font-family: ${({ theme }) => theme.fonts.body.fontFamily};
+    font-size: 1.8rem;
+    font-weight: normal;
+  }
+
+  ol, ul {
+    list-style: none;
+  }
+
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+`
