@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: ${({ theme }) => theme.fonts.body.fontFamily};
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: normal;
   }
 
@@ -64,8 +64,13 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
+  figure {
+    margin: 0;
+  }
+
   img {
+    display: block;
     height: auto;
-    max-width: 100%;
+    max-width: 100%;    
   }
 `

@@ -1,15 +1,19 @@
 import React from 'react'
 import { getFullImageUrl } from '../utils'
 
-const Menu = ({ className, logo, links }) => {
+const Menu = ({ className, logo, openIcon, closeIcon, links }) => {
   const mainLinks = links.filter(link => !link.isUserFlow && !link.relatedTo)
   const sublinks = links.filter(link => link.relatedTo !== null)
   const userLinks = links.filter(link => link.isUserFlow)
 
   return (
     <nav className={className}>
-      <figure>
+      <figure className='logo'>
         <img src={getFullImageUrl(logo.url)} alt={logo.alternativeText} />
+      </figure>
+
+      <figure className='toggle-menu-icon'>
+        <img src={getFullImageUrl(openIcon.url)} alt='Open menu' />
       </figure>
 
       <div className='links'>

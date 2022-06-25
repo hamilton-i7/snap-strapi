@@ -12,8 +12,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
 
   // Images
-  const [heroImageMobile, setHeroImageMobile] = useState('')
-  const [heroImageDesktop, setHeroImageDesktop] = useState('')
+  const [heroImageMobile, setHeroImageMobile] = useState({})
+  const [heroImageDesktop, setHeroImageDesktop] = useState({})
   const [clients, setClients] = useState([])
 
   useEffect(() => {
@@ -47,7 +47,12 @@ const Home = () => {
   return (
     !loading && (
       <>
-        <StyledMenu logo={menu.logo.data.attributes} links={menu.links} />
+        <StyledMenu
+          logo={menu.logo.data.attributes}
+          openIcon={menu.menuIcon.data.attributes}
+          closeIcon={menu.closeMenuIcon.data.attributes}
+          links={menu.links}
+        />
         <StyledHero
           heroImage={heroImageMobile}
           heading={heading}
