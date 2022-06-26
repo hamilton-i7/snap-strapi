@@ -1,6 +1,6 @@
 import React from 'react'
 import { getFullImageUrl } from '../utils'
-import { FilledButton } from './Button.style'
+import SnapButton from './Button.style'
 
 const Hero = ({ className, heroImage, heading, description, cta, clients }) => {
   return (
@@ -14,9 +14,9 @@ const Hero = ({ className, heroImage, heading, description, cta, clients }) => {
       <div className='content'>
         <h1 className='heading'>{heading}</h1>
         <p className='description'>{description}</p>
-        <FilledButton href='/' className='cta'>
+        <SnapButton href='/' className='cta' variant='solid'>
           {cta}
-        </FilledButton>
+        </SnapButton>
         <div className='clients'>
           {clients.map(client => (
             <figure key={client.id}>

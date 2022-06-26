@@ -31,13 +31,16 @@ const StyledHero = styled(Hero)`
   .clients {
     align-items: center;
     display: flex;
-    gap: 1rem;
+    justify-content: space-between;
     margin: 4.2rem 0;
     width: 100%;
 
     & figure {
-      flex: 1;
-      margin: 0;
+      flex-basis: 20%;
+
+      &:nth-child(2) {
+        flex-basis: 12%;
+      }
     }
   }
 `

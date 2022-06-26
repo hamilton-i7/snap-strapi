@@ -10,11 +10,16 @@ const Home = () => {
   const [cta, setCta] = useState('')
 
   const [loading, setLoading] = useState(true)
+  const [isMenuOpen, setMenuOpen] = useState(false)
 
   // Images
   const [heroImageMobile, setHeroImageMobile] = useState({})
   const [heroImageDesktop, setHeroImageDesktop] = useState({})
   const [clients, setClients] = useState([])
+
+  const toggleMenu = () => {
+    setMenuOpen(value => !value)
+  }
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -47,12 +52,7 @@ const Home = () => {
   return (
     !loading && (
       <>
-        <StyledMenu
-          logo={menu.logo.data.attributes}
-          openIcon={menu.menuIcon.data.attributes}
-          closeIcon={menu.closeMenuIcon.data.attributes}
-          links={menu.links}
-        />
+        <StyledMenu isOpen={isMenuOpen} onToggleMenu={toggleMenu} menu={menu} />
         <StyledHero
           heroImage={heroImageMobile}
           heading={heading}
