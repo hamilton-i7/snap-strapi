@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 
-const SnapButton = ({ variant = 'text', children, sx }) => {
+const SnapButton = ({ variant = 'text', onClick, children, sx }) => {
   const muiButtonVariant =
     variant === 'solid'
       ? 'contained'
@@ -11,6 +11,7 @@ const SnapButton = ({ variant = 'text', children, sx }) => {
   return (
     <Button
       variant={muiButtonVariant}
+      onClick={onClick}
       sx={{ textTransform: 'capitalize', ...sx }}>
       {children}
     </Button>

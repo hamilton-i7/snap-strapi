@@ -42,25 +42,25 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
   const onSubmenuToggle = id => {
     if (!(id in navigationLinks)) return
 
-    setSubmenuOpen(prev => {
-      return {
-        ...prev,
-        id: !prev[id],
-      }
-    })
+    setSubmenuOpen({ ...submenuOpen, [id]: !submenuOpen[id] })
   }
 
-  const handleDrawerToggle = () => {
+  const onDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
+
+    // Hide all submenus when the drawer is closed
+    if (!mobileOpen) {
+      setSubmenuOpen(setupInitialSubmenuState(navigationLinks))
+    }
   }
 
   const drawer = (
-    <Stack onClick={handleDrawerToggle}>
+    <Stack>
       <IconButton
         color='inherit'
         aria-label='close drawer'
         edge='start'
-        onClick={handleDrawerToggle}
+        onClick={onDrawerToggle}
         sx={{ alignSelf: 'end' }}>
         <Box component='img' src={closeMenuIcon.url} alt={closeMenuIcon.alt} />
       </IconButton>
@@ -70,7 +70,12 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
         {navigationLinks['null'].map(link => {
           return (
             <Box key={link.id}>
-              <ListItemButton onClick={onSubmenuToggle}>
+              <ListItemButton
+                onClick={
+                  link.id in navigationLinks
+                    ? () => onSubmenuToggle(link.id)
+                    : () => onDrawerToggle()
+                }>
                 <MenuTextItem primary={link.label} />
                 {link.id in navigationLinks ? (
                   submenuOpen[link.id] ? (
@@ -90,7 +95,7 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
                       timeout='auto'
                       unmountOnExit>
                       <List component='div' disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemButton onClick={onDrawerToggle} sx={{ pl: 4 }}>
                           {icon?.url && (
                             <ListItemIcon>
                               <Box
@@ -113,7 +118,9 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
       <List>
         {userLinks.map(link => (
           <SnapButton
+            key={link.id}
             variant={link.variant}
+            onClick={onDrawerToggle}
             sx={{
               display: 'block',
             }}>
@@ -148,7 +155,7 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
             color='inherit'
             aria-label='open drawer'
             edge='start'
-            onClick={handleDrawerToggle}
+            onClick={onDrawerToggle}
             sx={{ display: { sm: 'none' } }}>
             <Box
               component='img'
@@ -178,7 +185,7 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
           container={container}
           variant='temporary'
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={onDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
