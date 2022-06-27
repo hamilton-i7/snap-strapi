@@ -21,8 +21,14 @@ export default App
 const theme = createTheme({
   typography: {
     fontFamily: ['Epilogue', 'sans-serif'].join(','),
+    h1: {
+      fontSize: '3.4rem',
+    },
     subtitle1: {
       fontSize: '1.4rem',
+    },
+    body1: {
+      fontSize: '1.6rem',
     },
     button: {
       fontSize: '1.2rem',

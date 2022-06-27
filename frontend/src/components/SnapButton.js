@@ -20,17 +20,19 @@ const SnapButton = ({ variant = 'text', onClick, children, sx, ...props }) => {
 
 export default SnapButton
 
-const SnapTextButton = styled(Button)(({ theme }) => ({
+const BasicButton = styled(Button)({
   borderRadius: '1.2rem',
-  color: theme.palette.neutral.mediumGray,
   textAlign: 'center',
-  textTransform: 'capitalize',
+  '&:first-letter': {
+    textTransform: 'lowercase',
+  },
+})
+
+const SnapTextButton = styled(BasicButton)(({ theme }) => ({
+  color: theme.palette.neutral.mediumGray,
 }))
 
-const SnapOutlinedButton = styled(Button)(({ theme }) => ({
+const SnapOutlinedButton = styled(BasicButton)(({ theme }) => ({
   border: `0.12rem solid ${theme.palette.neutral.almostBlack}`,
-  borderRadius: '1.2rem',
   color: theme.palette.neutral.mediumGray,
-  textAlign: 'center',
-  textTransform: 'capitalize',
 }))
