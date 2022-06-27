@@ -1,10 +1,16 @@
-import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
+import {
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+  GlobalStyles,
+} from '@mui/material'
 import Home from './pages/Home'
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <GlobalStyles styles={{ html: { fontSize: '62.5%' } }} />
       <Home />
     </ThemeProvider>
   )
@@ -15,7 +21,12 @@ export default App
 const theme = createTheme({
   typography: {
     fontFamily: ['Epilogue', 'sans-serif'].join(','),
-    htmlFontSize: 10,
+    subtitle1: {
+      fontSize: '1.4rem',
+    },
+    button: {
+      fontSize: '1.2rem',
+    },
   },
   palette: {
     neutral: {

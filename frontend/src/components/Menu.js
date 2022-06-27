@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { getFullImageUrl, groupBy } from '../utils'
 import Link from '@mui/material/Link'
-import { Collapse, ListItemIcon, Stack } from '@mui/material'
+import { Collapse, ListItem, ListItemIcon, Stack } from '@mui/material'
 import { ExpandMore, ExpandLess } from '@mui/icons-material'
 import { useState } from 'react'
 import styled from '@emotion/styled'
@@ -61,23 +61,36 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
         aria-label='close drawer'
         edge='start'
         onClick={onDrawerToggle}
-        sx={{ alignSelf: 'end' }}>
-        <Box component='img' src={closeMenuIcon.url} alt={closeMenuIcon.alt} />
+        sx={{ alignSelf: 'end', margin: '1.2rem' }}>
+        <Box
+          component='img'
+          src={closeMenuIcon.url}
+          alt={closeMenuIcon.alt}
+          sx={{ width: '90%' }}
+        />
       </IconButton>
       <List
         sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
         aria-labelledby='menu'>
         {navigationLinks['null'].map(link => {
+          const hasSubmenu = link.id in navigationLinks
           return (
-            <Box key={link.id}>
+            <MenuItem key={link.id}>
               <ListItemButton
+                component={hasSubmenu ? 'div' : 'a'}
+                href={!hasSubmenu && '#'}
                 onClick={
-                  link.id in navigationLinks
+                  hasSubmenu
                     ? () => onSubmenuToggle(link.id)
                     : () => onDrawerToggle()
                 }>
-                <MenuTextItem primary={link.label} />
-                {link.id in navigationLinks ? (
+                <ListItemText
+                  primary={link.label}
+                  sx={{
+                    marginRight: hasSubmenu ? '1.2rem' : 0,
+                  }}
+                />
+                {hasSubmenu ? (
                   submenuOpen[link.id] ? (
                     <ExpandLess />
                   ) : (
@@ -93,11 +106,17 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
                       key={sublink.id}
                       in={submenuOpen[link.id]}
                       timeout='auto'
-                      unmountOnExit>
+                      unmountOnExit
+                      sx={{ paddingLeft: '2rem', width: '100%' }}>
                       <List component='div' disablePadding>
-                        <ListItemButton onClick={onDrawerToggle} sx={{ pl: 4 }}>
+                        <ListItemButton
+                          onClick={onDrawerToggle}
+                          component='a'
+                          href='#'
+                          sx={{ pl: 4 }}>
                           {icon?.url && (
-                            <ListItemIcon>
+                            <ListItemIcon
+                              sx={{ minWidth: 0, marginRight: '1.2rem' }}>
                               <Box
                                 component='img'
                                 src={getFullImageUrl(icon?.url)}
@@ -105,27 +124,32 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
                               />
                             </ListItemIcon>
                           )}
-                          <MenuTextItem primary={sublink.label} />
+                          <ListItemText primary={sublink.label} />
                         </ListItemButton>
                       </List>
                     </Collapse>
                   )
                 })}
-            </Box>
+            </MenuItem>
           )
         })}
       </List>
-      <List>
+      <List sx={{ padding: 0 }}>
         {userLinks.map(link => (
-          <SnapButton
-            key={link.id}
-            variant={link.variant}
-            onClick={onDrawerToggle}
-            sx={{
-              display: 'block',
-            }}>
-            {link.label}
-          </SnapButton>
+          <ListItem disablePadding sx={{ padding: '0.8rem 2rem' }}>
+            <SnapButton
+              key={link.id}
+              variant={link.variant}
+              component='a'
+              href='#'
+              onClick={onDrawerToggle}
+              sx={{
+                display: 'block',
+                width: '100%',
+              }}>
+              {link.label}
+            </SnapButton>
+          </ListItem>
         ))}
       </List>
     </Stack>
@@ -245,9 +269,18 @@ const Menu = ({ window, isOpen, onToggleMenu, menu }) => {
 }
 export default Menu
 
-const MenuTextItem = styled(ListItemText)(({ theme }) => ({
+const MenuItem = styled(ListItem)(({ theme }) => ({
+  flexDirection: 'column',
+  padding: 0,
+  '& .MuiListItemButton-root': {
+    padding: '0.4rem 2rem',
+    width: '100%',
+  },
+  '& .MuiListItemText-root': {
+    flex: 'none',
+  },
   '& .MuiListItemText-primary': {
-    fontSize: theme.typography.overline.fontSize,
+    fontSize: theme.typography.subtitle1.fontSize,
     textTransform: 'capitalize',
   },
 }))
@@ -262,7 +295,7 @@ const setupInitialSubmenuState = groupedLinks => {
   const result = {}
   for (const key of Object.keys(groupedLinks)) {
     if (key === null) continue
-    result[key] = false
+    result[key] = true
   }
   return result
 }
