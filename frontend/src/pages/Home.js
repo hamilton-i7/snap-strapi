@@ -64,19 +64,42 @@ const Home = () => {
                 width: '100%',
               }}
             />
-            <Stack>
+            <Stack
+              sx={{
+                alignItems: 'center',
+                gap: '2rem',
+                mt: { xs: '4.2rem' },
+                padding: '0 1.6rem',
+              }}>
               <Typography variant='h1'>{heading}</Typography>
-              <Typography variant='body1'>{description}</Typography>
-              <SnapButton variant={cta.variant} href='#'>
+              <Typography
+                variant='body1'
+                textAlign='center'
+                sx={{
+                  color: theme => theme.palette.neutral.mediumGray,
+                  lineHeight: 1.6,
+                }}>
+                {description}
+              </Typography>
+              <SnapButton variant={cta.variant} href='#' component='a'>
                 {cta.label}
               </SnapButton>
-              <Stack direction='row'>
+              <Stack
+                direction='row'
+                justifyContent='space-between'
+                alignItems='center'>
                 {clients.map(client => (
                   <Box
                     key={client.id}
                     component='img'
                     src={getFullImageUrl(client.attributes.url)}
                     alt={client.attributes.alternativeText}
+                    sx={{
+                      width: { xs: '20%' },
+                      '&:nth-child(2)': {
+                        width: { xs: '14%' },
+                      },
+                    }}
                   />
                 ))}
               </Stack>

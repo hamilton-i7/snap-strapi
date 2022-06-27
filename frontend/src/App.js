@@ -23,6 +23,7 @@ const theme = createTheme({
     fontFamily: ['Epilogue', 'sans-serif'].join(','),
     h1: {
       fontSize: '3.4rem',
+      fontWeight: 700,
     },
     subtitle1: {
       fontSize: '1.4rem',

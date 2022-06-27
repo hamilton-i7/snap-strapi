@@ -145,10 +145,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
               component='a'
               href='#'
               onClick={onDrawerToggle}
-              sx={{
-                display: 'block',
-                width: '100%',
-              }}>
+              fullWidth>
               {link.label}
             </SnapButton>
           </ListItem>
