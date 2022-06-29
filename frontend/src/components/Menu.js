@@ -6,19 +6,27 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import { getFullImageUrl, groupBy } from '../utils'
 import Link from '@mui/material/Link'
-import { Collapse, ListItem, ListItemIcon, Stack } from '@mui/material'
+import {
+  Collapse,
+  ListItem,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { ExpandMore, ExpandLess } from '@mui/icons-material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import SnapButton from './SnapButton'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const drawerWidth = 240
-const navItems = ['Home', 'About', 'Contact']
 
-const Menu = ({ window, isOpen, menu, children }) => {
+const SnapMenu = ({ window, menu, children }) => {
   const logo = menu.logo.data.attributes
   const links = menu.links
   const navigationLinks = groupBy(
@@ -26,6 +34,8 @@ const Menu = ({ window, isOpen, menu, children }) => {
     'relatedTo',
   )
   const userLinks = links.filter(link => link.isUserFlow)
+
+  // Collapsed menu controls
   const openMenuIcon = {
     url: getFullImageUrl(menu.menuIcon.data.attributes.url),
     alt: menu.menuIcon.data.attributes.alternativeText,
@@ -35,6 +45,8 @@ const Menu = ({ window, isOpen, menu, children }) => {
     alt: menu.closeMenuIcon.data.attributes.alternativeText,
   }
   const [mobileOpen, setMobileOpen] = useState(false)
+  const theme = useTheme()
+  const matchesSmallScreen = useMediaQuery(theme.breakpoints.up('sm'))
   const [submenuOpen, setSubmenuOpen] = useState(
     setupInitialSubmenuState(navigationLinks),
   )
@@ -44,8 +56,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
 
     setSubmenuOpen({ ...submenuOpen, [id]: !submenuOpen[id] })
   }
-
-  const onDrawerToggle = () => {
+  const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
 
     // Hide all submenus when the drawer is closed
@@ -54,13 +65,24 @@ const Menu = ({ window, isOpen, menu, children }) => {
     }
   }
 
+  // Expanded menu controls
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+
+  const handleClick = e => {
+    setAnchorEl(e.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   const drawer = (
     <Stack>
       <IconButton
         color='inherit'
         aria-label='close drawer'
         edge='start'
-        onClick={onDrawerToggle}
+        onClick={handleDrawerToggle}
         sx={{ alignSelf: 'end', margin: '1.2rem' }}>
         <Box
           component='img'
@@ -75,14 +97,14 @@ const Menu = ({ window, isOpen, menu, children }) => {
         {navigationLinks['null'].map(link => {
           const hasSubmenu = link.id in navigationLinks
           return (
-            <MenuItem key={link.id}>
+            <MobileMenuItem key={link.id}>
               <ListItemButton
                 component={hasSubmenu ? 'div' : 'a'}
                 href={!hasSubmenu ? '#' : undefined}
                 onClick={
                   hasSubmenu
                     ? () => onSubmenuToggle(link.id)
-                    : () => onDrawerToggle()
+                    : () => handleDrawerToggle()
                 }>
                 <ListItemText
                   primary={link.label}
@@ -110,7 +132,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
                       sx={{ paddingLeft: '2rem', width: '100%' }}>
                       <List component='div' disablePadding>
                         <ListItemButton
-                          onClick={onDrawerToggle}
+                          onClick={handleDrawerToggle}
                           component='a'
                           href='#'
                           sx={{ pl: 4 }}>
@@ -130,7 +152,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
                     </Collapse>
                   )
                 })}
-            </MenuItem>
+            </MobileMenuItem>
           )
         })}
       </List>
@@ -144,7 +166,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
               variant={link.variant}
               component='a'
               href='#'
-              onClick={onDrawerToggle}
+              onClick={handleDrawerToggle}
               fullWidth>
               {link.label}
             </SnapButton>
@@ -157,6 +179,12 @@ const Menu = ({ window, isOpen, menu, children }) => {
   const container =
     window !== undefined ? () => window().document.body : undefined
 
+  useEffect(() => {
+    if (matchesSmallScreen && mobileOpen) {
+      setMobileOpen(false)
+    }
+  }, [matchesSmallScreen, mobileOpen])
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
@@ -164,8 +192,9 @@ const Menu = ({ window, isOpen, menu, children }) => {
         elevation={0}
         sx={{
           background: theme => theme.palette.common.white,
+          color: theme => theme.palette.neutral.mediumGray,
         }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar>
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
@@ -178,27 +207,83 @@ const Menu = ({ window, isOpen, menu, children }) => {
             color='inherit'
             aria-label='open drawer'
             edge='start'
-            onClick={onDrawerToggle}
-            sx={{ display: { sm: 'none' } }}>
+            onClick={handleDrawerToggle}
+            sx={{ display: { sm: 'none' }, ml: 'auto' }}>
             <Box
               component='img'
-              src={isOpen ? closeMenuIcon.url : openMenuIcon.url}
-              alt={isOpen ? closeMenuIcon.alt : openMenuIcon.alt}
+              src={mobileOpen ? closeMenuIcon.url : openMenuIcon.url}
+              alt={mobileOpen ? closeMenuIcon.alt : openMenuIcon.alt}
               width='90%'
             />
           </IconButton>
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-            MUI
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map(item => (
-              <SnapButton key={item} sx={{ color: '#fff' }}>
-                {item}
-              </SnapButton>
-            ))}
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              justifyContent: 'space-between',
+              width: '100%',
+            }}>
+            <List
+              sx={{ display: 'flex', width: '100%' }}
+              aria-labelledby='menu'>
+              {navigationLinks['null'].map(link => {
+                const hasSubmenu = link.id in navigationLinks
+                return (
+                  <Box key={link.id}>
+                    <SnapButton
+                      id={link.id}
+                      component='li'
+                      href={!hasSubmenu ? '#' : undefined}
+                      onClick={handleClick}
+                      sx={{ display: 'flex' }}>
+                      <Typography
+                        variant='subtitle1'
+                        component='span'
+                        sx={{
+                          marginRight: hasSubmenu ? '1.2rem' : 0,
+                        }}>
+                        {link.label}
+                      </Typography>
+                      {hasSubmenu ? (
+                        submenuOpen[link.id] ? (
+                          <ExpandLess />
+                        ) : (
+                          <ExpandMore />
+                        )
+                      ) : null}
+                    </SnapButton>
+                    <Menu
+                      id='basic-menu'
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': link.id,
+                      }}>
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
+                  </Box>
+                )
+              })}
+            </List>
+            <List sx={{ display: 'flex', padding: 0 }}>
+              {userLinks.map(link => (
+                <ListItem
+                  key={link.id}
+                  disablePadding
+                  sx={{ padding: '0.8rem 2rem' }}>
+                  <SnapButton
+                    variant={link.variant}
+                    component='a'
+                    href='#'
+                    onClick={handleDrawerToggle}
+                    fullWidth>
+                    {link.label}
+                  </SnapButton>
+                </ListItem>
+              ))}
+            </List>
           </Box>
         </Toolbar>
       </AppBar>
@@ -208,7 +293,7 @@ const Menu = ({ window, isOpen, menu, children }) => {
           container={container}
           variant='temporary'
           open={mobileOpen}
-          onClose={onDrawerToggle}
+          onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -216,7 +301,6 @@ const Menu = ({ window, isOpen, menu, children }) => {
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              color: theme => theme.palette.neutral.mediumGray,
               width: drawerWidth,
             },
           }}>
@@ -230,9 +314,9 @@ const Menu = ({ window, isOpen, menu, children }) => {
     </Box>
   )
 }
-export default Menu
+export default SnapMenu
 
-const MenuItem = styled(ListItem)(({ theme }) => ({
+const MobileMenuItem = styled(ListItem)(({ theme }) => ({
   flexDirection: 'column',
   padding: 0,
   '& .MuiListItemButton-root': {

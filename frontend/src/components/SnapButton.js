@@ -31,22 +31,22 @@ const BasicButton = styled(Button)({
   display: 'block',
   padding: '0.8rem 1.6rem',
   textAlign: 'center',
-  textTransform: 'lowercase',
-  '&:first-letter': {
-    textTransform: 'uppercase',
-  },
+  textTransform: 'none',
 })
 
-const SnapTextButton = styled(BasicButton)(({ theme }) => ({
+const SnapTextButton = styled(BasicButton)(({ theme, sx }) => ({
   color: theme.palette.neutral.mediumGray,
+  ...sx,
 }))
 
-const SnapOutlinedButton = styled(BasicButton)(({ theme }) => ({
+const SnapOutlinedButton = styled(BasicButton)(({ theme, sx }) => ({
   border: `0.12rem solid ${theme.palette.neutral.almostBlack}`,
   color: theme.palette.neutral.mediumGray,
+  ...sx,
 }))
 
-const SnapContainedButton = styled(BasicButton)(({ theme }) => ({
+const SnapContainedButton = styled(BasicButton)(({ theme, sx }) => ({
   backgroundColor: theme.palette.neutral.almostBlack,
   color: theme.palette.neutral.almostWhite,
+  ...sx,
 }))
