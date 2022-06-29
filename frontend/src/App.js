@@ -1,8 +1,8 @@
 import {
-  createTheme,
   ThemeProvider,
   CssBaseline,
   GlobalStyles,
+  createTheme,
 } from '@mui/material'
 import Home from './pages/Home'
 
@@ -18,18 +18,33 @@ const App = () => {
 
 export default App
 
+const breakpoints = {
+  xs: 0,
+  sm: 600,
+  md: 900,
+  lg: 1200,
+  xl: 1536,
+}
+
 const theme = createTheme({
+  breakpoints,
   typography: {
     fontFamily: ['Epilogue', 'sans-serif'].join(','),
     h1: {
       fontSize: '3.4rem',
       fontWeight: 700,
+      [`@media (min-width:${breakpoints.sm}px)`]: {
+        fontSize: '4.2rem',
+      },
     },
     subtitle1: {
       fontSize: '1.4rem',
     },
     body1: {
       fontSize: '1.6rem',
+      [`@media (min-width:${breakpoints.sm}px)`]: {
+        fontSize: '1.8rem',
+      },
     },
     button: {
       fontSize: '1.2rem',

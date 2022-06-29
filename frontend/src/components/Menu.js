@@ -6,7 +6,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
-import { getFullImageUrl, groupBy } from '../utils'
+import { getFullImageUrl, groupBy, useSmallScreenMatcher } from '../utils'
 import Link from '@mui/material/Link'
 import {
   Collapse,
@@ -22,7 +22,6 @@ import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import SnapButton from './SnapButton'
 import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
 
 const drawerWidth = 240
 
@@ -46,7 +45,7 @@ const SnapMenu = ({ window, menu, children }) => {
   }
   const [mobileOpen, setMobileOpen] = useState(false)
   const theme = useTheme()
-  const matchesSmallScreen = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchesSmallScreen = useSmallScreenMatcher(theme)
   const [submenuOpen, setSubmenuOpen] = useState(
     setupInitialSubmenuState(navigationLinks),
   )
@@ -246,12 +245,12 @@ const SnapMenu = ({ window, menu, children }) => {
                         variant='subtitle1'
                         component='span'
                         sx={{
-                          marginRight: hasSubmenu ? '1.2rem' : 0,
+                          marginRight: hasSubmenu ? '0.4rem' : 0,
                         }}>
                         {link.label}
                       </Typography>
                       {hasSubmenu ? (
-                        submenuOpen[link.id] ? (
+                        Boolean(anchorLinks[link.id]) ? (
                           <ExpandLess />
                         ) : (
                           <ExpandMore />
@@ -266,16 +265,32 @@ const SnapMenu = ({ window, menu, children }) => {
                         onClose={() => handleCloseSubmenu(link.id)}
                         MenuListProps={{
                           'aria-labelledby': link.id,
+                        }}
+                        elevation={12}
+                        sx={{
+                          '& .MuiPaper-root': {
+                            borderRadius: '1.2rem',
+                            mt: '1rem',
+                            padding: '1rem 0',
+                          },
                         }}>
                         {navigationLinks[link.id].map(sublink => {
                           const icon = sublink.icon.data?.attributes
                           return (
                             <MenuItem
                               key={sublink.id}
-                              onClick={() => handleCloseSubmenu(link.id)}>
+                              onClick={() => handleCloseSubmenu(link.id)}
+                              sx={{
+                                color: theme =>
+                                  theme.palette.neutral.mediumGray,
+                                padding: '0.6rem 2.4rem',
+                              }}>
                               {icon?.url && (
                                 <ListItemIcon
-                                  sx={{ minWidth: 0, marginRight: '1.2rem' }}>
+                                  sx={{
+                                    marginRight: '1.2rem',
+                                    minWidth: 'auto',
+                                  }}>
                                   <Box
                                     component='img'
                                     src={getFullImageUrl(icon?.url)}
@@ -283,7 +298,7 @@ const SnapMenu = ({ window, menu, children }) => {
                                   />
                                 </ListItemIcon>
                               )}
-                              {sublink.label}
+                              <ListItemText primary={sublink.label} />
                             </MenuItem>
                           )
                         })}

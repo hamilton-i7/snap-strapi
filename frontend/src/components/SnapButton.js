@@ -29,7 +29,7 @@ export default SnapButton
 const BasicButton = styled(Button)({
   borderRadius: '1.2rem',
   display: 'block',
-  padding: '0.8rem 1.6rem',
+  padding: '0.4rem 1.6rem',
   textAlign: 'center',
   textTransform: 'none',
 })

@@ -3,13 +3,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchHomeContent } from '../content/home/homeSlice'
 import SnapMenu from '../components/Menu'
 import { Box, Stack, Typography } from '@mui/material'
-import { getFullImageUrl } from '../utils'
+import { getFullImageUrl, useMediumScreenMatcher } from '../utils'
+import { useTheme } from '@mui/material/styles'
 import SnapButton from '../components/SnapButton'
 
 const Home = () => {
   const content = useSelector(state => state.home.data)
   const status = useSelector(state => state.home.status)
   const dispatch = useDispatch()
+
+  const theme = useTheme()
+  const matcheLargeScreen = useMediumScreenMatcher(theme)
 
   const {
     menu,
@@ -36,8 +40,16 @@ const Home = () => {
       <Stack component='main' mb='3.2rem'>
         <Box
           component='img'
-          src={getFullImageUrl(imageMobile.url)}
-          alt={imageDesktop.alternativeText}
+          src={
+            matcheLargeScreen
+              ? getFullImageUrl(imageDesktop.url)
+              : getFullImageUrl(imageMobile.url)
+          }
+          alt={
+            matcheLargeScreen
+              ? imageDesktop.alternativeText
+              : imageMobile.alternativeText
+          }
           sx={{
             width: '100%',
           }}
@@ -47,7 +59,10 @@ const Home = () => {
             alignItems: 'center',
             gap: '2rem',
             mt: { xs: '4.2rem' },
-            padding: '0 1.6rem',
+            padding: {
+              xs: '0 1.6rem',
+              sm: '0 3.2rem',
+            },
           }}>
           <Typography variant='h1'>{heading}</Typography>
           <Typography
@@ -59,7 +74,13 @@ const Home = () => {
             }}>
             {description}
           </Typography>
-          <SnapButton variant={cta.variant} href='#' component='a'>
+          <SnapButton
+            variant={cta.variant}
+            href='#'
+            component='a'
+            sx={{
+              padding: '0.8rem 1.6rem',
+            }}>
             {cta.label}
           </SnapButton>
           <Stack
