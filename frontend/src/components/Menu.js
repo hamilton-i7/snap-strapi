@@ -66,14 +66,21 @@ const SnapMenu = ({ window, menu, children }) => {
   }
 
   // Expanded menu controls
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorLinks, setAnchorLinks] = useState(
+    setupAnchorLinks(navigationLinks),
+  )
 
-  const handleClick = e => {
-    setAnchorEl(e.currentTarget)
+  const handleOpenSubmenu = (e, id) => {
+    setAnchorLinks({
+      ...anchorLinks,
+      [id]: e.currentTarget,
+    })
   }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleCloseSubmenu = id => {
+    setAnchorLinks({
+      ...anchorLinks,
+      [id]: null,
+    })
   }
 
   const drawer = (
@@ -120,7 +127,7 @@ const SnapMenu = ({ window, menu, children }) => {
                   )
                 ) : null}
               </ListItemButton>
-              {navigationLinks[link.id] &&
+              {hasSubmenu &&
                 navigationLinks[link.id].map(sublink => {
                   const icon = sublink.icon.data?.attributes
                   return (
@@ -233,7 +240,7 @@ const SnapMenu = ({ window, menu, children }) => {
                       id={link.id}
                       component='li'
                       href={!hasSubmenu ? '#' : undefined}
-                      onClick={handleClick}
+                      onClick={(event, id) => handleOpenSubmenu(event, link.id)}
                       sx={{ display: 'flex' }}>
                       <Typography
                         variant='subtitle1'
@@ -251,18 +258,37 @@ const SnapMenu = ({ window, menu, children }) => {
                         )
                       ) : null}
                     </SnapButton>
-                    <Menu
-                      id='basic-menu'
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      MenuListProps={{
-                        'aria-labelledby': link.id,
-                      }}>
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>Logout</MenuItem>
-                    </Menu>
+                    {hasSubmenu && (
+                      <Menu
+                        id='basic-menu'
+                        anchorEl={anchorLinks[link.id]}
+                        open={Boolean(anchorLinks[link.id])}
+                        onClose={() => handleCloseSubmenu(link.id)}
+                        MenuListProps={{
+                          'aria-labelledby': link.id,
+                        }}>
+                        {navigationLinks[link.id].map(sublink => {
+                          const icon = sublink.icon.data?.attributes
+                          return (
+                            <MenuItem
+                              key={sublink.id}
+                              onClick={() => handleCloseSubmenu(link.id)}>
+                              {icon?.url && (
+                                <ListItemIcon
+                                  sx={{ minWidth: 0, marginRight: '1.2rem' }}>
+                                  <Box
+                                    component='img'
+                                    src={getFullImageUrl(icon?.url)}
+                                    alt={icon?.alternativeText}
+                                  />
+                                </ListItemIcon>
+                              )}
+                              {sublink.label}
+                            </MenuItem>
+                          )
+                        })}
+                      </Menu>
+                    )}
                   </Box>
                 )
               })}
@@ -343,6 +369,15 @@ const setupInitialSubmenuState = groupedLinks => {
   for (const key of Object.keys(groupedLinks)) {
     if (key === null) continue
     result[key] = false
+  }
+  return result
+}
+
+const setupAnchorLinks = groupedLinks => {
+  const result = {}
+  for (const key of Object.keys(groupedLinks)) {
+    if (key === null) continue
+    result[key] = null
   }
   return result
 }
