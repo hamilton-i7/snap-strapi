@@ -12,6 +12,9 @@ export const groupBy = (collection, key) =>
 export const useSmallScreenMatcher = theme =>
   useMediaQuery(theme.breakpoints.up('sm'))
 
+export const useTabletScreenMatcher = theme =>
+  useMediaQuery(theme.breakpoints.up('tablet'))
+
 export const useMediumScreenMatcher = theme =>
   useMediaQuery(theme.breakpoints.up('md'))
 

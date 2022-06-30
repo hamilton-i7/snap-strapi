@@ -6,7 +6,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
-import { getFullImageUrl, groupBy, useSmallScreenMatcher } from '../utils'
+import { getFullImageUrl, groupBy, useTabletScreenMatcher } from '../utils'
 import Link from '@mui/material/Link'
 import {
   Collapse,
@@ -43,9 +43,9 @@ const SnapMenu = ({ window, menu, children }) => {
     url: getFullImageUrl(menu.closeMenuIcon.data.attributes.url),
     alt: menu.closeMenuIcon.data.attributes.alternativeText,
   }
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const theme = useTheme()
-  const matchesSmallScreen = useSmallScreenMatcher(theme)
+  const matchesTabletScreen = useTabletScreenMatcher(theme)
   const [submenuOpen, setSubmenuOpen] = useState(
     setupInitialSubmenuState(navigationLinks),
   )
@@ -56,10 +56,10 @@ const SnapMenu = ({ window, menu, children }) => {
     setSubmenuOpen({ ...submenuOpen, [id]: !submenuOpen[id] })
   }
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
+    setDrawerOpen(!drawerOpen)
 
     // Hide all submenus when the drawer is closed
-    if (!mobileOpen) {
+    if (!drawerOpen) {
       setSubmenuOpen(setupInitialSubmenuState(navigationLinks))
     }
   }
@@ -186,10 +186,10 @@ const SnapMenu = ({ window, menu, children }) => {
     window !== undefined ? () => window().document.body : undefined
 
   useEffect(() => {
-    if (matchesSmallScreen && mobileOpen) {
-      setMobileOpen(false)
+    if (matchesTabletScreen && drawerOpen) {
+      setDrawerOpen(false)
     }
-  }, [matchesSmallScreen, mobileOpen])
+  }, [matchesTabletScreen, drawerOpen])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -200,13 +200,12 @@ const SnapMenu = ({ window, menu, children }) => {
           background: theme => theme.palette.common.white,
           color: theme => theme.palette.neutral.mediumGray,
         }}>
-        <Toolbar>
+        <Toolbar sx={{ gap: { sm: '1.2rem' } }}>
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
               src={getFullImageUrl(logo.url)}
               alt={logo.alternativeText}
-              width='85%'
             />
           </Link>
           <IconButton
@@ -214,17 +213,17 @@ const SnapMenu = ({ window, menu, children }) => {
             aria-label='open drawer'
             edge='start'
             onClick={handleDrawerToggle}
-            sx={{ display: { sm: 'none' }, ml: 'auto' }}>
+            sx={{ display: { tablet: 'none' }, ml: 'auto' }}>
             <Box
               component='img'
-              src={mobileOpen ? closeMenuIcon.url : openMenuIcon.url}
-              alt={mobileOpen ? closeMenuIcon.alt : openMenuIcon.alt}
+              src={drawerOpen ? closeMenuIcon.url : openMenuIcon.url}
+              alt={drawerOpen ? closeMenuIcon.alt : openMenuIcon.alt}
               width='90%'
             />
           </IconButton>
           <Box
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              display: { xs: 'none', tablet: 'flex' },
               justifyContent: 'space-between',
               width: '100%',
             }}>
@@ -234,12 +233,11 @@ const SnapMenu = ({ window, menu, children }) => {
               {navigationLinks['null'].map(link => {
                 const hasSubmenu = link.id in navigationLinks
                 return (
-                  <Box key={link.id}>
+                  <Box key={link.id} component='li'>
                     <SnapButton
                       id={link.id}
-                      component='li'
                       href={!hasSubmenu ? '#' : undefined}
-                      onClick={(event, id) => handleOpenSubmenu(event, link.id)}
+                      onClick={event => handleOpenSubmenu(event, link.id)}
                       sx={{ display: 'flex' }}>
                       <Typography
                         variant='subtitle1'
@@ -313,7 +311,7 @@ const SnapMenu = ({ window, menu, children }) => {
                 <ListItem
                   key={link.id}
                   disablePadding
-                  sx={{ padding: '0.8rem 2rem' }}>
+                  sx={{ padding: { sm: '0.8rem 1.2rem', md: '0.8rem 2rem' } }}>
                   <SnapButton
                     variant={link.variant}
                     component='a'
@@ -333,13 +331,13 @@ const SnapMenu = ({ window, menu, children }) => {
           anchor='right'
           container={container}
           variant='temporary'
-          open={mobileOpen}
+          open={drawerOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', tablet: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,

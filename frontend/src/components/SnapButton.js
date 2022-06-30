@@ -36,17 +36,33 @@ const BasicButton = styled(Button)({
 
 const SnapTextButton = styled(BasicButton)(({ theme, sx }) => ({
   color: theme.palette.neutral.mediumGray,
+  '&:hover': {
+    backgroundColor: 'none',
+    color: theme.palette.neutral.almostBlack,
+  },
   ...sx,
 }))
 
 const SnapOutlinedButton = styled(BasicButton)(({ theme, sx }) => ({
-  border: `0.12rem solid ${theme.palette.neutral.almostBlack}`,
+  border: `0.15rem solid ${theme.palette.neutral.mediumGray}`,
   color: theme.palette.neutral.mediumGray,
+  '&:hover': {
+    backgroundColor: 'none',
+    borderColor: theme.palette.neutral.almostBlack,
+    color: theme.palette.neutral.almostBlack,
+  },
   ...sx,
 }))
 
 const SnapContainedButton = styled(BasicButton)(({ theme, sx }) => ({
   backgroundColor: theme.palette.neutral.almostBlack,
+  border: `0.15rem solid ${theme.palette.neutral.almostBlack}`,
   color: theme.palette.neutral.almostWhite,
+  fontWeight: theme.typography.fontWeightBold,
+  '&:hover': {
+    backgroundColor: 'none',
+    border: `0.15rem solid ${theme.palette.neutral.mediumGray}`,
+    color: theme.palette.neutral.almostBlack,
+  },
   ...sx,
 }))
