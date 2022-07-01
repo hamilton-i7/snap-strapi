@@ -29,6 +29,7 @@ const breakpoints = {
     tablet: 768,
     md: 900,
     lg: 1200,
+    desktop: 1440,
     xl: 1536,
   },
 }
@@ -44,7 +45,14 @@ const theme = createTheme({
         fontSize: '4.2rem',
       },
       [`@media (min-width:${breakpoints.values.md}px)`]: {
+        fontSize: '5.6rem',
+      },
+      [`@media (min-width:${breakpoints.values.lg}px)`]: {
         fontSize: '6.4rem',
+      },
+      [`@media (min-width:${breakpoints.values.desktop}px)`]: {
+        fontSize: '6.8rem',
+        lineHeight: 1,
       },
     },
     subtitle1: {
@@ -56,8 +64,12 @@ const theme = createTheme({
         fontSize: '1.8rem',
       },
     },
+    body2: {
+      fontSize: '1.2rem',
+    },
     button: {
       fontSize: '1.2rem',
+      textTransform: 'none',
     },
   },
   palette: {

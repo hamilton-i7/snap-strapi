@@ -59,6 +59,7 @@ const SnapContainedButton = styled(BasicButton)(({ theme, sx }) => ({
   border: `0.15rem solid ${theme.palette.neutral.almostBlack}`,
   color: theme.palette.neutral.almostWhite,
   fontWeight: theme.typography.fontWeightBold,
+  padding: '0.8em 2.4em',
   '&:hover': {
     backgroundColor: 'none',
     border: `0.15rem solid ${theme.palette.neutral.mediumGray}`,

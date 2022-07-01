@@ -206,6 +206,9 @@ const SnapMenu = ({ window, menu, children }) => {
               component='img'
               src={getFullImageUrl(logo.url)}
               alt={logo.alternativeText}
+              sx={{
+                width: '80%',
+              }}
             />
           </Link>
           <IconButton
@@ -237,10 +240,11 @@ const SnapMenu = ({ window, menu, children }) => {
                     <SnapButton
                       id={link.id}
                       href={!hasSubmenu ? '#' : undefined}
+                      component={!hasSubmenu ? 'a' : 'button'}
                       onClick={event => handleOpenSubmenu(event, link.id)}
                       sx={{ display: 'flex' }}>
                       <Typography
-                        variant='subtitle1'
+                        variant='button'
                         component='span'
                         sx={{
                           marginRight: hasSubmenu ? '0.4rem' : 0,
@@ -279,6 +283,7 @@ const SnapMenu = ({ window, menu, children }) => {
                               key={sublink.id}
                               onClick={() => handleCloseSubmenu(link.id)}
                               sx={{
+                                alignItems: 'end',
                                 color: theme =>
                                   theme.palette.neutral.mediumGray,
                                 padding: '0.6rem 2.4rem',
@@ -287,7 +292,9 @@ const SnapMenu = ({ window, menu, children }) => {
                                 <ListItemIcon
                                   sx={{
                                     marginRight: '1.2rem',
-                                    minWidth: 'auto',
+                                    '&.MuiListItemIcon-root': {
+                                      minWidth: 'auto',
+                                    },
                                   }}>
                                   <Box
                                     component='img'
@@ -296,7 +303,16 @@ const SnapMenu = ({ window, menu, children }) => {
                                   />
                                 </ListItemIcon>
                               )}
-                              <ListItemText primary={sublink.label} />
+                              <ListItemText
+                                primary={sublink.label}
+                                primaryTypographyProps={{
+                                  lineHeight: 1,
+                                  variant: 'body2',
+                                }}
+                                sx={{
+                                  lineHeight: 1,
+                                }}
+                              />
                             </MenuItem>
                           )
                         })}
@@ -346,7 +362,7 @@ const SnapMenu = ({ window, menu, children }) => {
           {drawer}
         </Drawer>
       </Box>
-      <Box>
+      <Box width='100%'>
         <Toolbar />
         {children}
       </Box>

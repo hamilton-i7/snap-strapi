@@ -37,117 +37,116 @@ const Home = () => {
     <div>Error found</div>
   ) : status === 'success' ? (
     <SnapMenu menu={menu}>
-      <Box
+      <Grid
+        container
         component='main'
+        // spacing={{ md: 2, lg: 4, desktop: 6 }}
         sx={{
-          alignItems: { xs: 'start', md: 'center' },
-          display: 'flex',
-          // Get the max height but excluding the toolbar's height
-          minHeight: 'calc(100vh - 64px)',
+          my: '3.2rem',
+          [theme.breakpoints.up('md')]: {
+            flexDirection: 'row-reverse',
+          },
         }}>
         <Grid
-          container
+          item
+          xs={12}
+          md={5}
+          lg={6}
+          desktop={7}
           sx={{
-            my: '3.2rem',
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+          <Box
+            component='img'
+            src={
+              matcheLargeScreen
+                ? getFullImageUrl(imageDesktop.url)
+                : getFullImageUrl(imageMobile.url)
+            }
+            alt={
+              matcheLargeScreen
+                ? imageDesktop.alternativeText
+                : imageMobile.alternativeText
+            }
+            sx={{
+              maxWidth: { xs: '60rem', md: '48rem' },
+              width: '100%',
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={7}
+          lg={6}
+          desktop={5}
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            mt: '13rem',
+            padding: {
+              xs: '0 1.6rem',
+              sm: '0 3.2rem',
+            },
             [theme.breakpoints.up('md')]: {
-              alignItems: 'center',
-              flexDirection: 'row-reverse',
-              my: 0,
+              alignItems: 'start',
+              gap: '4rem',
+              padding: 0,
+              '&.MuiGrid-item': {
+                paddingLeft: '10%',
+              },
             },
           }}>
-          <Grid
-            item
-            xs={12}
-            md={5}
+          <Typography variant='h1'>{heading}</Typography>
+          <Typography
+            variant='body1'
             sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column',
+              color: theme => theme.palette.neutral.mediumGray,
+              lineHeight: 1.6,
+              textAlign: { xs: 'center', md: 'start' },
             }}>
-            <Box
-              component='img'
-              src={
-                matcheLargeScreen
-                  ? getFullImageUrl(imageDesktop.url)
-                  : getFullImageUrl(imageMobile.url)
-              }
-              alt={
-                matcheLargeScreen
-                  ? imageDesktop.alternativeText
-                  : imageMobile.alternativeText
-              }
-              sx={{
-                maxWidth: { xs: '60rem' },
-                width: '100%',
-              }}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={7}
+            {description}
+          </Typography>
+          <SnapButton
+            variant={cta.variant}
+            href='#'
+            component='a'
+            sx={{
+              fontSize: '1.4rem',
+            }}>
+            {cta.label}
+          </SnapButton>
+          <Stack
             sx={{
               alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '2rem',
-              mt: { xs: '4.2rem' },
-              padding: {
-                xs: '0 1.6rem',
-                sm: '0 3.2rem',
-              },
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
               [theme.breakpoints.up('md')]: {
-                alignItems: 'start',
-                alignSelf: 'stretch',
+                marginTop: 'auto',
               },
             }}>
-            <Typography variant='h1'>{heading}</Typography>
-            <Typography
-              variant='body1'
-              sx={{
-                color: theme => theme.palette.neutral.mediumGray,
-                lineHeight: 1.6,
-                textAlign: { xs: 'center', md: 'start' },
-              }}>
-              {description}
-            </Typography>
-            <SnapButton
-              variant={cta.variant}
-              href='#'
-              component='a'
-              sx={{
-                padding: '0.8rem 1.6rem',
-              }}>
-              {cta.label}
-            </SnapButton>
-            <Stack
-              sx={{
-                alignItems: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                [theme.breakpoints.up('md')]: {
-                  alignItems: 'end',
-                  flex: 1,
-                },
-              }}>
-              {clients.map(client => (
-                <Box
-                  key={client.id}
-                  component='img'
-                  src={getFullImageUrl(client.attributes.url)}
-                  alt={client.attributes.alternativeText}
-                  sx={{
-                    width: { xs: '20%' },
-                    '&:nth-of-type(2)': {
-                      width: { xs: '14%' },
-                    },
-                  }}
-                />
-              ))}
-            </Stack>
-          </Grid>
+            {clients.map(client => (
+              <Box
+                key={client.id}
+                component='img'
+                src={getFullImageUrl(client.attributes.url)}
+                alt={client.attributes.alternativeText}
+                sx={{
+                  width: '20%',
+                  '&:nth-of-type(2)': {
+                    width: '14%',
+                  },
+                }}
+              />
+            ))}
+          </Stack>
         </Grid>
-      </Box>
+      </Grid>
     </SnapMenu>
   ) : null
 }
