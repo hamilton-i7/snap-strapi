@@ -194,13 +194,13 @@ const SnapMenu = ({ window, menu, children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
-        component='nav'
+        component='header'
         elevation={0}
         sx={{
           background: theme => theme.palette.common.white,
           color: theme => theme.palette.neutral.mediumGray,
         }}>
-        <Toolbar sx={{ gap: { sm: '1.2rem' } }}>
+        <Toolbar component='nav' sx={{ gap: { sm: '1.2rem' } }}>
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
@@ -268,7 +268,6 @@ const SnapMenu = ({ window, menu, children }) => {
                         MenuListProps={{
                           'aria-labelledby': link.id,
                         }}
-                        elevation={12}
                         sx={{
                           '& .MuiPaper-root': {
                             borderRadius: '1.2rem',

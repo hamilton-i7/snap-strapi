@@ -87,7 +87,7 @@ const Home = () => {
             display: 'flex',
             flexDirection: 'column',
             gap: '2rem',
-            mt: '13rem',
+            mt: { xs: '4.8rem', lg: '13rem' },
             padding: {
               xs: '0 1.6rem',
               sm: '0 3.2rem',
@@ -95,10 +95,7 @@ const Home = () => {
             [theme.breakpoints.up('md')]: {
               alignItems: 'start',
               gap: '4rem',
-              padding: 0,
-              '&.MuiGrid-item': {
-                paddingLeft: '10%',
-              },
+              padding: '0 2rem 0 10%',
             },
           }}>
           <Typography variant='h1'>{heading}</Typography>
@@ -125,10 +122,8 @@ const Home = () => {
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
+              mt: { xs: '2.4rem', md: 'auto' },
               width: '100%',
-              [theme.breakpoints.up('md')]: {
-                marginTop: 'auto',
-              },
             }}>
             {clients.map(client => (
               <Box
