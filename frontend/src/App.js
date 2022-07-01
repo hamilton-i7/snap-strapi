@@ -1,76 +1,82 @@
+import {
+  ThemeProvider,
+  CssBaseline,
+  GlobalStyles,
+  createTheme,
+} from '@mui/material'
 import Home from './pages/Home'
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 const App = () => {
   return (
-    <ThemeProvider
-      theme={{
-        fonts: {
-          body: {
-            fontFamily: 'Epilogue, sans-serif',
-          },
-        },
-        colors: {
-          almostWhite: 'hsl(0, 0%, 98%)',
-          mediumGray: 'hsl(0, 0%, 41%)',
-          almostBlack: 'hsl(0, 0%, 8%)',
-        },
-      }}>
-      <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <GlobalStyles styles={globalStyles} />
       <Home />
     </ThemeProvider>
   )
 }
 
-const Theme = ({ children }) => (
-  <ThemeProvider
-    theme={{
-      fonts: {
-        body: {
-          fontFamily: 'Epilogue, sans-serif',
-        },
-      },
-      colors: {
-        almostWhite: 'hsl(0, 0%, 98%)',
-        mediumGray: 'hsl(0, 0%, 41%)',
-        almostBlack: 'hsl(0, 0%, 8%)',
-      },
-    }}>
-    {children}
-  </ThemeProvider>
-)
-
 export default App
 
-const GlobalStyle = createGlobalStyle`
-  html {
-    box-sizing: border-box;
-    font-size: 62.5%;
-  }
+const globalStyles = {
+  html: { fontSize: '62.5%' },
+}
 
-  *, *:before, *:after {
-    box-sizing: inherit;
-  }
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 600,
+    tablet: 768,
+    md: 900,
+    lg: 1200,
+    desktop: 1440,
+    xl: 1536,
+  },
+}
 
-  body, h1, h2, h3, h4, h5, h6, p, ol, ul {
-    margin: 0;
-    padding: 0;
-    font-family: ${({ theme }) => theme.fonts.body.fontFamily};
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
-  ol, ul {
-    list-style: none;
-  }
-
-  figure {
-    margin: 0;
-  }
-
-  img {
-    display: block;
-    height: auto;
-    max-width: 100%;    
-  }
-`
+const theme = createTheme({
+  breakpoints,
+  typography: {
+    fontFamily: ['Epilogue', 'sans-serif'].join(','),
+    h1: {
+      fontSize: '3.4rem',
+      fontWeight: 700,
+      [`@media (min-width:${breakpoints.values.sm}px)`]: {
+        fontSize: '4.2rem',
+      },
+      [`@media (min-width:${breakpoints.values.md}px)`]: {
+        fontSize: '5.6rem',
+      },
+      [`@media (min-width:${breakpoints.values.lg}px)`]: {
+        fontSize: '6.4rem',
+      },
+      [`@media (min-width:${breakpoints.values.desktop}px)`]: {
+        fontSize: '6.8rem',
+        lineHeight: 1,
+      },
+    },
+    subtitle1: {
+      fontSize: '1.4rem',
+    },
+    body1: {
+      fontSize: '1.6rem',
+      [`@media (min-width:${breakpoints.values.sm}px)`]: {
+        fontSize: '1.8rem',
+      },
+    },
+    body2: {
+      fontSize: '1.2rem',
+    },
+    button: {
+      fontSize: '1.2rem',
+      textTransform: 'none',
+    },
+  },
+  palette: {
+    neutral: {
+      almostWhite: 'hsl(0, 0%, 98%)',
+      mediumGray: 'hsl(0, 0%, 41%)',
+      almostBlack: 'hsl(0, 0%, 8%)',
+    },
+  },
+})

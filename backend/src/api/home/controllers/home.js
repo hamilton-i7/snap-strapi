@@ -28,6 +28,7 @@ module.exports = createCoreController("api::home.home", ({ strapi }) => ({
         clients: true,
         imageDesktop: true,
         imageMobile: true,
+        cta: true,
       },
     });
     const sanitizedEntity = await this.sanitizeOutput(entity, ctx);

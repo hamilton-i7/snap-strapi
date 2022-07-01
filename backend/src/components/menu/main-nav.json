@@ -20,16 +20,6 @@
       "repeatable": true,
       "component": "widget.button"
     },
-    "variant": {
-      "type": "enumeration",
-      "enum": [
-        "extended",
-        "collapsed",
-        "mobile"
-      ],
-      "default": "extended",
-      "required": true
-    },
     "menuIcon": {
       "type": "media",
       "multiple": false,
