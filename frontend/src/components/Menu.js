@@ -200,7 +200,11 @@ const SnapMenu = ({ window, menu, children }) => {
           background: theme => theme.palette.common.white,
           color: theme => theme.palette.neutral.mediumGray,
         }}>
-        <Toolbar component='nav' id='menu' sx={{ gap: { sm: '1.2rem' } }}>
+        <Toolbar
+          component='nav'
+          id='menu'
+          sx={{ gap: { sm: '1.2rem' } }}
+          aria-label='extended menu'>
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
@@ -341,7 +345,7 @@ const SnapMenu = ({ window, menu, children }) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box component='nav'>
+      <Box component='nav' aria-label='mobile menu'>
         <Drawer
           anchor='right'
           container={container}
