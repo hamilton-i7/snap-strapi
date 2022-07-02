@@ -49,9 +49,6 @@ const theme = createTheme({
       },
       [`@media (min-width:${breakpoints.values.lg}px)`]: {
         fontSize: '6.4rem',
-      },
-      [`@media (min-width:${breakpoints.values.desktop}px)`]: {
-        fontSize: '6.8rem',
         lineHeight: 1,
       },
     },

@@ -200,7 +200,7 @@ const SnapMenu = ({ window, menu, children }) => {
           background: theme => theme.palette.common.white,
           color: theme => theme.palette.neutral.mediumGray,
         }}>
-        <Toolbar component='nav' sx={{ gap: { sm: '1.2rem' } }}>
+        <Toolbar component='nav' id='menu' sx={{ gap: { sm: '1.2rem' } }}>
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
