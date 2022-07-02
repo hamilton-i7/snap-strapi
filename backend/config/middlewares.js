@@ -12,7 +12,7 @@ module.exports = ({ env }) => [
             "data:",
             "blob:",
             "dl.airtable.com",
-            "yourBucketName.s3.yourRegion.amazonaws.com",
+            `${env("AWS_BUCKET")}.s3.${env("AWS_REGION")}.amazonaws.com`,
           ],
           "media-src": [
             "'self'",
