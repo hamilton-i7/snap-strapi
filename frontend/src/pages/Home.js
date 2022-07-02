@@ -40,7 +40,6 @@ const Home = () => {
       <Grid
         container
         component='main'
-        // spacing={{ md: 2, lg: 4, desktop: 6 }}
         sx={{
           my: '3.2rem',
           [theme.breakpoints.up('md')]: {
