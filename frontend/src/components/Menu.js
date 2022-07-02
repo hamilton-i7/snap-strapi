@@ -6,7 +6,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
-import { getFullImageUrl, groupBy, useTabletScreenMatcher } from '../utils'
+import { groupBy, useTabletScreenMatcher } from '../utils'
 import Link from '@mui/material/Link'
 import {
   Collapse,
@@ -36,11 +36,11 @@ const SnapMenu = ({ window, menu, children }) => {
 
   // Collapsed menu controls
   const openMenuIcon = {
-    url: getFullImageUrl(menu.menuIcon.data.attributes.url),
+    url: menu.menuIcon.data.attributes.url,
     alt: menu.menuIcon.data.attributes.alternativeText,
   }
   const closeMenuIcon = {
-    url: getFullImageUrl(menu.closeMenuIcon.data.attributes.url),
+    url: menu.closeMenuIcon.data.attributes.url,
     alt: menu.closeMenuIcon.data.attributes.alternativeText,
   }
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -147,7 +147,7 @@ const SnapMenu = ({ window, menu, children }) => {
                               sx={{ minWidth: 0, marginRight: '1.2rem' }}>
                               <Box
                                 component='img'
-                                src={getFullImageUrl(icon?.url)}
+                                src={icon?.url}
                                 alt={icon?.alternativeText}
                               />
                             </ListItemIcon>
@@ -208,7 +208,7 @@ const SnapMenu = ({ window, menu, children }) => {
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
-              src={getFullImageUrl(logo.url)}
+              src={logo.url}
               alt={logo.alternativeText}
               sx={{
                 width: '80%',
@@ -301,7 +301,7 @@ const SnapMenu = ({ window, menu, children }) => {
                                   }}>
                                   <Box
                                     component='img'
-                                    src={getFullImageUrl(icon?.url)}
+                                    src={icon?.url}
                                     alt={icon?.alternativeText}
                                   />
                                 </ListItemIcon>

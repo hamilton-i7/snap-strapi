@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { fetchHomeContent } from '../content/home/homeSlice'
 import SnapMenu from '../components/Menu'
 import { Box, Grid, Stack, Typography } from '@mui/material'
-import { getFullImageUrl, useMediumScreenMatcher } from '../utils'
+import { useMediumScreenMatcher } from '../utils'
 import { useTheme } from '@mui/material/styles'
 import SnapButton from '../components/SnapButton'
 
@@ -59,11 +59,7 @@ const Home = () => {
           }}>
           <Box
             component='img'
-            src={
-              matcheLargeScreen
-                ? getFullImageUrl(imageDesktop.url)
-                : getFullImageUrl(imageMobile.url)
-            }
+            src={matcheLargeScreen ? imageDesktop.url : imageMobile.url}
             alt={
               matcheLargeScreen
                 ? imageDesktop.alternativeText
@@ -128,7 +124,7 @@ const Home = () => {
               <Box
                 key={client.id}
                 component='img'
-                src={getFullImageUrl(client.attributes.url)}
+                src={client.attributes.url}
                 alt={client.attributes.alternativeText}
                 sx={{
                   width: '20%',
