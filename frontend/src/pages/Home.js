@@ -27,7 +27,7 @@ const Home = () => {
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetchHomeContent())
+      dispatch(fetchHomeContent({}))
     }
   }, [status, dispatch])
 
