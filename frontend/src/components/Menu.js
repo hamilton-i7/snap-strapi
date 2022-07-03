@@ -92,7 +92,7 @@ const SnapMenu = ({ window, menu, children }) => {
         sx={{ alignSelf: 'end', margin: '1.2rem' }}>
         <Box
           component='img'
-          src={closeMenuIcon.url}
+          src={getFullImageUrl(closeMenuIcon.url)}
           alt={closeMenuIcon.alt}
           sx={{ width: '90%' }}
         />
@@ -147,7 +147,7 @@ const SnapMenu = ({ window, menu, children }) => {
                               sx={{ minWidth: 0, marginRight: '1.2rem' }}>
                               <Box
                                 component='img'
-                                src={icon?.url}
+                                src={getFullImageUrl(icon?.url)}
                                 alt={icon?.alternativeText}
                               />
                             </ListItemIcon>
@@ -223,8 +223,8 @@ const SnapMenu = ({ window, menu, children }) => {
             sx={{ display: { tablet: 'none' }, ml: 'auto' }}>
             <Box
               component='img'
-              src={drawerOpen ? closeMenuIcon.url : openMenuIcon.url}
-              alt={drawerOpen ? closeMenuIcon.alt : openMenuIcon.alt}
+              src={getFullImageUrl(openMenuIcon.url)}
+              alt={openMenuIcon.alt}
               width='90%'
             />
           </IconButton>
@@ -301,7 +301,7 @@ const SnapMenu = ({ window, menu, children }) => {
                                   }}>
                                   <Box
                                     component='img'
-                                    src={icon?.url}
+                                    src={getFullImageUrl(icon?.url)}
                                     alt={icon?.alternativeText}
                                   />
                                 </ListItemIcon>
