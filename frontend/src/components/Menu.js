@@ -6,7 +6,7 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Toolbar from '@mui/material/Toolbar'
-import { groupBy, useTabletScreenMatcher } from '../utils'
+import { getFullImageUrl, groupBy, useTabletScreenMatcher } from '../utils'
 import Link from '@mui/material/Link'
 import {
   Collapse,
@@ -208,7 +208,7 @@ const SnapMenu = ({ window, menu, children }) => {
           <Link underline='none' href='#' display='flex'>
             <Box
               component='img'
-              src={logo.url}
+              src={getFullImageUrl(logo.url)}
               alt={logo.alternativeText}
               sx={{
                 width: '80%',

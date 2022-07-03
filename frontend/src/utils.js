@@ -1,4 +1,8 @@
 import { useMediaQuery } from '@mui/material'
+import http from './http'
+
+export const getFullImageUrl = url =>
+  process.env.NODE_ENV === 'development' ? http.defaults.baseURL + url : url
 
 export const groupBy = (collection, key) =>
   collection.reduce((rv, x) => {
